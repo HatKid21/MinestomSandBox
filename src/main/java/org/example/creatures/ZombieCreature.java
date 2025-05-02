@@ -1,0 +1,44 @@
+package org.example.creatures;
+
+import net.kyori.adventure.text.Component;
+import net.minestom.server.coordinate.Vec;
+import net.minestom.server.entity.EntityCreature;
+import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.Player;
+import net.minestom.server.entity.ai.goal.MeleeAttackGoal;
+import net.minestom.server.entity.ai.goal.RandomStrollGoal;
+import net.minestom.server.entity.ai.target.ClosestEntityTarget;
+import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
+import net.minestom.server.entity.attribute.Attribute;
+import net.minestom.server.utils.time.TimeUnit;
+
+import java.util.List;
+
+public class ZombieCreature extends EnemyCreature {
+
+    public ZombieCreature(){
+        super(EntityType.ZOMBIE);
+        getAttribute(Attribute.MAX_HEALTH).setBaseValue(20);
+        setHealth(20);
+        setCustomNameVisible(true);
+        setCustomName(Component.text(getHealth()));
+        getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
+        addAIGroup(
+                List.of(
+                        new MeleeAttackGoal(this,1.6,20, TimeUnit.SERVER_TICK),
+                        new RandomStrollGoal(this,20)
+                ),
+                List.of(new LastEntityDamagerTarget(this,10),
+                        new ClosestEntityTarget(this,10,entity -> entity instanceof Player)
+                )
+        );
+
+    }
+
+    public void onHit(double damage, double knockback, Vec direction) {
+        float currentHealth = getHealth();
+        setHealth(currentHealth - (float) damage);
+        setVelocity(direction.mul(knockback));
+        setCustomName(Component.text(getHealth()));
+    }
+}
