@@ -54,7 +54,7 @@ public class WeaponRegistry {
                 .setReloadTime(2.3)
                 .setRange(30)
                 .setTracer(true)
-                .setAttackSpeed(0.5)
+                .setAttackSpeed(0.7)
                 .build();
         RangedWeapon sniper = new RangedWeapon.Builder(Material.WOODEN_SHOVEL)
                 .setSound(SoundEvent.ENTITY_FIREWORK_ROCKET_LARGE_BLAST)

@@ -66,7 +66,7 @@ public abstract class Weapon {
             isAttackDelay = false;
         };
 
-        executorService.schedule(task,(long) attackSpeed * 1000, TimeUnit.MILLISECONDS);
+        executorService.schedule(task,(long) (attackSpeed * 1000), TimeUnit.MILLISECONDS);
 
     }
 
