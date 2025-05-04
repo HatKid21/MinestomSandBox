@@ -2,13 +2,10 @@ package org.example.weapons;
 
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.Player;
-import net.minestom.server.event.entity.EntityAttackEvent;
-import net.minestom.server.event.player.PlayerHandAnimationEvent;
 
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.instance.Instance;
@@ -17,6 +14,7 @@ import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.SoundEffectPacket;
 import net.minestom.server.tag.Tag;
 import org.example.creatures.EnemyCreature;
+import org.example.economy.CurrencyManager;
 import org.example.utils.Ray;
 
 import java.util.Collection;
@@ -34,6 +32,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
     private final double range;
     private final int piercing;
     private final int bulletsPerShot;
+    private final int currencyPerShot;
 
     private boolean isReloading = false;
 
@@ -46,6 +45,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
         this.range = builder.range;
         this.piercing = builder.piercing;
         this.bulletsPerShot = builder.bulletsPerShot;
+        this.currencyPerShot = builder.currencyPerShot;
     }
 
     public int getMagazine() {
@@ -177,6 +177,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
 
                 for (Entity target : targets) {
                     if (target instanceof EnemyCreature enemy) {
+                        CurrencyManager.addCurrency(player, currencyPerShot);
                         enemy.onHit(getDamage(), getKnockback(), direction);
                     }
                 }
@@ -198,6 +199,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
         private boolean tracer;
         protected double range;
 
+        private int currencyPerShot = 1;
         private int piercing = 1;
         private int bulletsPerShot = 1;
 
@@ -212,7 +214,12 @@ public class RangedWeapon extends Weapon implements Reloadable {
 
         public Builder setPiercing(int piercing) {
             this.piercing = piercing;
-            return this;
+            return self();
+        }
+
+        public Builder setCurrencyPerShot(int currency){
+            currencyPerShot = currency;
+            return self();
         }
 
         public Builder setTracer(boolean tracer) {

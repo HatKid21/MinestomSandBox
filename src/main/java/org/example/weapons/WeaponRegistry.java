@@ -55,6 +55,7 @@ public class WeaponRegistry {
                 .setRange(30)
                 .setTracer(true)
                 .setAttackSpeed(0.6)
+                .setCurrencyPerShot(15)
                 .build();
         RangedWeapon sniper = new RangedWeapon.Builder(Material.WOODEN_SHOVEL)
                 .setSound(SoundEvent.ENTITY_FIREWORK_ROCKET_LARGE_BLAST)
@@ -69,6 +70,7 @@ public class WeaponRegistry {
                 .setTracer(true)
                 .setRange(50)
                 .setAttackSpeed(1)
+                .setCurrencyPerShot(30)
                 .build();
         RangedWeapon shotgun = new RangedWeapon.Builder(Material.IRON_HOE)
                 .setSound(SoundEvent.ENTITY_GENERIC_EXPLODE)
@@ -83,6 +85,7 @@ public class WeaponRegistry {
                 .setBulletsPerShot(20)
                 .setSpreadFactor(0.1)
                 .setAttackSpeed(1.15)
+                .setCurrencyPerShot(2)
                 .build();
 
         registerWeapon(pistol);

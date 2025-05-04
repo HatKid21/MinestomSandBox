@@ -21,7 +21,9 @@ import org.example.commands.AddAmmoCommand;
 import org.example.commands.EntitySpawnCommand;
 import org.example.commands.StatisticCommand;
 import org.example.commands.ZombieCreatureSpawnCommand;
+import org.example.economy.CurrencyManager;
 import org.example.events.*;
+import org.example.scoreboard.Scoreboard;
 import org.example.utils.GeneratorManager;
 import org.example.utils.TickTabDisplay;
 import org.example.weapons.WeaponRegistry;
@@ -79,6 +81,8 @@ public class Server {
             meta.setItemStack(ItemStack.of(Material.GOLD_INGOT));
             entity.setInstance(instance, player.getPosition());
             entity.addPassenger(entity1);
+            Scoreboard playerScoreboard = new Scoreboard(player);
+            CurrencyManager.registerPlayer(player);
         });
 
         registerEvents();
