@@ -103,11 +103,9 @@ public class Server {
     public static void registerEvents(){
         new PickUpEvent();
         new CarryingEvent();
-        new ShootingEvent();
+        new PlayerWeaponHandlerEvent();
         new PunchEvent();
         new GetPlayerSpawnItemsEvent();
-        new ReloadEvent();
-        new WeaponTookInMainHandEvent();
         new MusicEvent();
     }
 

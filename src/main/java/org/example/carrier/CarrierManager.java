@@ -1,10 +1,7 @@
-package org.example.carrierFeature;
+package org.example.carrier;
 
 import net.minestom.server.entity.Entity;
-import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
-import net.minestom.server.entity.metadata.display.ItemDisplayMeta;
-import net.minestom.server.item.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;

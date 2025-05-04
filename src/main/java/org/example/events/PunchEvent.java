@@ -8,7 +8,7 @@ import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.entity.EntityAttackEvent;
 
-import org.example.carrierFeature.CarrierManager;
+import org.example.carrier.CarrierManager;
 
 public class PunchEvent {
 

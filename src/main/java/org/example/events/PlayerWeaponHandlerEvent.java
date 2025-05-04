@@ -4,6 +4,8 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerChangeHeldSlotEvent;
+import net.minestom.server.event.player.PlayerHandAnimationEvent;
+import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
 import org.example.weapons.AmmoManager;
@@ -11,10 +13,22 @@ import org.example.weapons.RangedWeapon;
 import org.example.weapons.Weapon;
 import org.example.weapons.WeaponRegistry;
 
-public class WeaponTookInMainHandEvent {
+public class PlayerWeaponHandlerEvent {
 
-    public WeaponTookInMainHandEvent(){
+    public PlayerWeaponHandlerEvent(){
         GlobalEventHandler handler = MinecraftServer.getGlobalEventHandler();
+        handler.addListener(PlayerHandAnimationEvent.class, event ->{
+            Player player = event.getPlayer();
+            ItemStack itemStack = player.getItemInMainHand();
+            Tag<String> weaponIdTag = Tag.String("weapon_id");
+            if (itemStack.hasTag(weaponIdTag)){
+                Weapon weapon = WeaponRegistry.getWeaponById(itemStack.getTag(weaponIdTag));
+                if (weapon instanceof RangedWeapon rangedWeapon){
+                    rangedWeapon.reload(player);
+                }
+            }
+        });
+
         handler.addListener(PlayerChangeHeldSlotEvent.class, event ->{
             Player player = event.getPlayer();
             ItemStack item = event.getItemInNewSlot();
@@ -30,6 +44,17 @@ public class WeaponTookInMainHandEvent {
                 player.setLevel(0);
             }
         });
+
+        handler.addListener(PlayerUseItemEvent.class, event ->{
+            Player player = event.getPlayer();
+            ItemStack itemStack = event.getItemStack();
+            if (itemStack.hasTag(Tag.String("weapon_id"))){
+                Weapon weapon = WeaponRegistry.getWeaponById(itemStack.getTag(Tag.String("weapon_id")));
+                weapon.onUse(player,event);
+            }
+        });
+
+
     }
 
 }

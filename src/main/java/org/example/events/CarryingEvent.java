@@ -6,7 +6,7 @@ import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerTickEndEvent;
-import org.example.carrierFeature.CarrierManager;
+import org.example.carrier.CarrierManager;
 
 
 public class CarryingEvent {

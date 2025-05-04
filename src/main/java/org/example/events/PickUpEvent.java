@@ -1,20 +1,14 @@
 package org.example.events;
 
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.collision.CollisionUtils;
 import net.minestom.server.coordinate.Point;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
-import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.attribute.Attribute;
-import net.minestom.server.entity.attribute.AttributeModifier;
 import net.minestom.server.event.GlobalEventHandler;
-import net.minestom.server.event.entity.EntityAttackEvent;
-import net.minestom.server.event.item.PlayerBeginItemUseEvent;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.minestom.server.item.ItemStack;
-import org.example.carrierFeature.CarrierManager;
+import org.example.carrier.CarrierManager;
 
 import java.util.Objects;
 
