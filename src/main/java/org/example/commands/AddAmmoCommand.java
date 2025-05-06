@@ -8,10 +8,10 @@ import org.example.player.CustomPlayer;
 
 public class AddAmmoCommand extends Command {
 
-    public AddAmmoCommand(){
+    public AddAmmoCommand() {
         super("ammo");
 
-        setDefaultExecutor((sender, context) ->{
+        setDefaultExecutor((sender, context) -> {
             Player player = (Player) sender;
             player.sendMessage("Usage: /ammo <weapon_id> <amount>");
         });
@@ -19,13 +19,13 @@ public class AddAmmoCommand extends Command {
         var weaponIdArgument = ArgumentType.String("weapon_id");
         var amountArgument = ArgumentType.Integer("amount");
 
-        addSyntax((sender,context) ->{
+        addSyntax((sender, context) -> {
             String weaponID = context.get(weaponIdArgument);
             int amount = context.get(amountArgument);
             CustomPlayer customPlayer = (CustomPlayer) sender;
-            customPlayer.addAmmo(weaponID,amount);
+            customPlayer.addAmmo(weaponID, amount);
             customPlayer.sendMessage(Component.text(amount + " ammo has added to " + weaponID));
-        },weaponIdArgument,amountArgument);
+        }, weaponIdArgument, amountArgument);
 
 
     }

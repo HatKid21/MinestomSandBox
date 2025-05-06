@@ -11,29 +11,29 @@ public class CarrierManager {
 
     private static final Map<UUID, Entity> uuidItemStackMap = new HashMap<>();
 
-    private static void registerCarrier(Player player){
+    private static void registerCarrier(Player player) {
         UUID uuid = player.getUuid();
         uuidItemStackMap.put(uuid, null);
     }
 
-    public static void unregisterCarrier(Player player){
+    public static void unregisterCarrier(Player player) {
         UUID uuid = player.getUuid();
         uuidItemStackMap.remove(uuid);
     }
 
-    public static void removeItem(Player player){
+    public static void removeItem(Player player) {
         uuidItemStackMap.get(player.getUuid()).setNoGravity(false);
-        uuidItemStackMap.put(player.getUuid(),null);
+        uuidItemStackMap.put(player.getUuid(), null);
     }
 
-    public static Entity getItem(Player player){
-        if (!uuidItemStackMap.containsKey(player.getUuid())){
+    public static Entity getItem(Player player) {
+        if (!uuidItemStackMap.containsKey(player.getUuid())) {
             registerCarrier(player);
         }
         return uuidItemStackMap.get(player.getUuid());
     }
 
-    public static void setItem(Player player, Entity item){
+    public static void setItem(Player player, Entity item) {
         item.setNoGravity(true);
         uuidItemStackMap.put(player.getUuid(), item);
     }

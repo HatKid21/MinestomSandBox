@@ -14,13 +14,13 @@ public class PunchEvent {
 
     private static final double forceFactor = 10;
 
-    public PunchEvent(){
+    public PunchEvent() {
         GlobalEventHandler handler = MinecraftServer.getGlobalEventHandler();
         handler.addListener(EntityAttackEvent.class, event -> {
             Entity entity = event.getEntity();
-            if (entity instanceof Player player){
+            if (entity instanceof Player player) {
                 Vec direction = player.getPosition().direction().normalize();
-                if (CarrierManager.getItem(player) != null){
+                if (CarrierManager.getItem(player) != null) {
                     Entity item = CarrierManager.getItem(player);
                     CarrierManager.removeItem(player);
                     player.getAttribute(Attribute.ENTITY_INTERACTION_RANGE).setBaseValue(3);

@@ -1,17 +1,13 @@
 package org.example.weapons;
 
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.item.Material;
 import net.minestom.server.sound.SoundEvent;
-import net.minestom.server.timer.Task;
-import net.minestom.server.timer.TaskSchedule;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Weapon {
 
@@ -54,25 +50,25 @@ public abstract class Weapon {
         return weaponID;
     }
 
-    protected void delayBetweenAttack(){
-        if (isAttackDelay){
+    protected void delayBetweenAttack() {
+        if (isAttackDelay) {
             return;
         }
         isAttackDelay = true;
 
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
-        task = () ->{
+        task = () -> {
             isAttackDelay = false;
         };
 
-        executorService.schedule(task,(long) (attackSpeed * 1000), TimeUnit.MILLISECONDS);
+        executorService.schedule(task, (long) (attackSpeed * 1000), TimeUnit.MILLISECONDS);
 
     }
 
     public abstract void onUse(Player player, PlayerUseItemEvent event);
 
-    protected Weapon(Builder<?> builder){
+    protected Weapon(Builder<?> builder) {
         this.material = builder.material;
         this.knockback = builder.knockback;
         this.damage = builder.damage;
@@ -82,7 +78,7 @@ public abstract class Weapon {
         this.attackSpeed = builder.attackSpeed;
     }
 
-    public static abstract class Builder<T extends Builder<T>>{
+    public static abstract class Builder<T extends Builder<T>> {
         protected double damage = 1;
         protected Material material;
         protected double knockback = 1;
@@ -91,26 +87,26 @@ public abstract class Weapon {
         private float pitch;
         private double attackSpeed = 1;
 
-        public T setSound(SoundEvent sound){
+        public T setSound(SoundEvent sound) {
             this.sound = sound;
             return self();
         }
 
-        public T setAttackSpeed(double attackSpeed){
+        public T setAttackSpeed(double attackSpeed) {
             this.attackSpeed = attackSpeed;
             return self();
         }
 
-        public T setPitch(float pitch){
+        public T setPitch(float pitch) {
             this.pitch = pitch;
             return self();
         }
 
-        public Builder(Material material){
+        public Builder(Material material) {
             this.material = material;
         }
 
-        public T setWeaponId(String weaponID){
+        public T setWeaponId(String weaponID) {
             this.weaponID = weaponID;
             return self();
         }
@@ -120,7 +116,7 @@ public abstract class Weapon {
             return self();
         }
 
-        public T setDamage(double damage){
+        public T setDamage(double damage) {
             this.damage = damage;
             return self();
         }

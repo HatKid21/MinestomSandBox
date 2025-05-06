@@ -1,6 +1,5 @@
 package org.example.utils;
 
-import net.kyori.adventure.text.Component;
 import net.minestom.server.collision.BoundingBox;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
@@ -11,7 +10,6 @@ import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import org.example.creatures.EnemyCreature;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -67,9 +65,8 @@ public class Ray {
                     position = position.add(direction.mul(step));
                     continue;
                 }
-                if (collisionTarget instanceof EnemyCreature){
+                if (collisionTarget instanceof EnemyCreature) {
                     hitTargets.add(collisionTarget);
-//                    instance.sendMessage(Component.text(collisionTarget.getEntityType().key().value()));
                 }
             }
 

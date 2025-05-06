@@ -23,7 +23,6 @@ import org.example.commands.StatisticCommand;
 import org.example.commands.ZombieCreatureSpawnCommand;
 import org.example.events.*;
 import org.example.player.CustomPlayer;
-import org.example.scoreboard.Scoreboard;
 import org.example.utils.GeneratorManager;
 import org.example.utils.TickTabDisplay;
 import org.example.weapons.WeaponRegistry;
@@ -55,29 +54,29 @@ public class Server {
 
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
 
-        eventHandler.addListener(AsyncPlayerConfigurationEvent.class, event ->{
+        eventHandler.addListener(AsyncPlayerConfigurationEvent.class, event -> {
             Player player = event.getPlayer();
             event.setSpawningInstance(instance);
-            player.setRespawnPoint(new Pos(0,56,1));
+            player.setRespawnPoint(new Pos(0, 56, 1));
         });
 
-        eventHandler.addListener(ServerTickMonitorEvent.class, event ->{
+        eventHandler.addListener(ServerTickMonitorEvent.class, event -> {
             TickMonitor tickMonitor = event.getTickMonitor();
             double TPS = 1000 / tickMonitor.getTickTime();
-            TPS = Math.min(TPS,20);
-            String formattedTps = String.format("%.2f",TPS);
+            TPS = Math.min(TPS, 20);
+            String formattedTps = String.format("%.2f", TPS);
             Component footer = Component.text("TPS: " + formattedTps);
             tabDisplay.setFooter(footer);
         });
 
-        eventHandler.addListener(PlayerSpawnEvent.class,event ->{
-            Player player =  event.getPlayer();
+        eventHandler.addListener(PlayerSpawnEvent.class, event -> {
+            Player player = event.getPlayer();
             player.setGameMode(GameMode.SURVIVAL);
             Entity entity = new Entity(EntityType.ITEM_DISPLAY);
             Entity entity1 = new Entity(EntityType.ARMOR_STAND);
             EntityMeta entityMeta = entity1.getEntityMeta();
             entityMeta.setInvisible(true);
-            entity1.setInstance(instance,player.getPosition());
+            entity1.setInstance(instance, player.getPosition());
             ItemDisplayMeta meta = (ItemDisplayMeta) entity.getEntityMeta();
             meta.setItemStack(ItemStack.of(Material.GOLD_INGOT));
             entity.setInstance(instance, player.getPosition());
@@ -92,12 +91,12 @@ public class Server {
 
         instance.setChunkSupplier(LightingChunk::new);
 
-        server.start("0.0.0.0",25565);
+        server.start("0.0.0.0", 25565);
         GeneratorManager.init(instance);
         tabDisplay.start();
     }
 
-    public static void registerCommands(){
+    public static void registerCommands() {
         CommandManager commandManager = MinecraftServer.getCommandManager();
         commandManager.register(new EntitySpawnCommand());
         commandManager.register(new ZombieCreatureSpawnCommand());
@@ -105,7 +104,7 @@ public class Server {
         commandManager.register(new AddAmmoCommand());
     }
 
-    public static void registerEvents(){
+    public static void registerEvents() {
         new PickUpEvent();
         new CarryingEvent();
         new PlayerWeaponHandlerEvent();

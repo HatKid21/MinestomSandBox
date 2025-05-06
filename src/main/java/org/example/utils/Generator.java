@@ -40,13 +40,13 @@ public class Generator {
 
                 AtomicInteger iterations = new AtomicInteger();
 
-                MinecraftServer.getSchedulerManager().submitTask(() ->{
-                    if(iterations.get() == 1){
+                MinecraftServer.getSchedulerManager().submitTask(() -> {
+                    if (iterations.get() == 1) {
                         spawnNewEnemy();
                         return TaskSchedule.stop();
                     }
                     iterations.getAndIncrement();
-                   return TaskSchedule.seconds(delaySeconds);
+                    return TaskSchedule.seconds(delaySeconds);
                 });
             }
             return TaskSchedule.tick(5);
@@ -56,7 +56,7 @@ public class Generator {
 
     private void spawnNewEnemy() {
         EnemyCreature newEnemy = supplier.get();
-        if (!Objects.requireNonNull(instance.getChunkAt(pos)).isLoaded()){
+        if (!Objects.requireNonNull(instance.getChunkAt(pos)).isLoaded()) {
             instance.loadChunk(pos);
         }
         newEnemy.setInstance(instance, pos).thenAccept(v -> {

@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 
 public class RangedWeapon extends Weapon implements Reloadable {
 
+    private final int maxAmmoSize;
     private final int magazine;
     private final double reloadTime;
     private final double spreadFactor;
@@ -47,12 +48,16 @@ public class RangedWeapon extends Weapon implements Reloadable {
         this.piercing = builder.piercing;
         this.bulletsPerShot = builder.bulletsPerShot;
         this.currencyPerShot = builder.currencyPerShot;
+        this.maxAmmoSize = builder.maxAmmoSize;
     }
 
     public int getMagazine() {
         return magazine;
     }
 
+    public int getMaxAmmoSize() {
+        return maxAmmoSize;
+    }
 
     public void reload(Player player) {
 
@@ -70,7 +75,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
         ItemStack item = player.getInventory().getItemStack(weaponHeldSlot);
         RangedWeapon weapon = (RangedWeapon) WeaponRegistry.getWeaponById(item.getTag(weaponIdTag));
 
-        if (weapon.getMagazine() == item.getTag(ammoTag)){
+        if (weapon.getMagazine() == item.getTag(ammoTag)) {
             return;
         }
 
@@ -79,15 +84,15 @@ public class RangedWeapon extends Weapon implements Reloadable {
             int currentAmmo = item.getTag(ammoTag);
             int dif = magazine - currentAmmo;
             int currentSavedAmmo = customPlayer.getAmmo(weaponID);
-            if (customPlayer.consumeAmmo(weaponID,dif)) {
+            if (customPlayer.consumeAmmo(weaponID, dif)) {
                 ItemStack updatedItem = item.withTag(ammoTag, magazine).withAmount(magazine);
-                player.getInventory().setItemStack(weaponHeldSlot,updatedItem);
-            } else if (((CustomPlayer) player).consumeAmmo(weaponID,currentSavedAmmo)) {
+                player.getInventory().setItemStack(weaponHeldSlot, updatedItem);
+            } else if (((CustomPlayer) player).consumeAmmo(weaponID, currentSavedAmmo)) {
                 ItemStack updatedItem = item.withTag(ammoTag, currentSavedAmmo).withAmount(currentAmmo + currentSavedAmmo);
-                player.getInventory().setItemStack(weaponHeldSlot,updatedItem);
+                player.getInventory().setItemStack(weaponHeldSlot, updatedItem);
             }
 
-            updatePlayerAmmo(player,weaponHeldSlot);
+            updatePlayerAmmo(player, weaponHeldSlot);
             isReloading = false;
         };
 
@@ -139,15 +144,15 @@ public class RangedWeapon extends Weapon implements Reloadable {
     @Override
     public void onUse(Player player, PlayerUseItemEvent event) {
         CustomPlayer customPlayer = (CustomPlayer) player;
-        if (isReloading){
+        if (isReloading) {
             return;
         }
 
-        if (isAttackDelay){
+        if (isAttackDelay) {
             return;
         }
 
-        if (magazine != 0){
+        if (magazine != 0) {
             delayBetweenAttack();
         }
 
@@ -160,9 +165,9 @@ public class RangedWeapon extends Weapon implements Reloadable {
 
         SoundEffectPacket shotSound = null;
 
-        if (getSound() != null){
+        if (getSound() != null) {
             shotSound = new SoundEffectPacket(
-                    getSound(), Sound.Source.MASTER, playerPos,1,getPitch(),5
+                    getSound(), Sound.Source.MASTER, playerPos, 1, getPitch(), 5
             );
         }
 
@@ -170,7 +175,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
         int currentAmmo = item.getTag(ammoTag);
 
         if (currentAmmo > 0) {
-            if (shotSound != null){
+            if (shotSound != null) {
                 player.sendPacket(shotSound);
             }
             for (int bullet = 0; bullet < bulletsPerShot; bullet++) {
@@ -198,6 +203,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
 
     public static class Builder extends Weapon.Builder<Builder> {
 
+        private int maxAmmoSize = 1;
         private int magazine;
         private double reloadTime;
         private double spreadFactor;
@@ -217,12 +223,17 @@ public class RangedWeapon extends Weapon implements Reloadable {
             return self();
         }
 
+        public Builder setMaxAmmoSize(int size) {
+            this.maxAmmoSize = size;
+            return self();
+        }
+
         public Builder setPiercing(int piercing) {
             this.piercing = piercing;
             return self();
         }
 
-        public Builder setCurrencyPerShot(int currency){
+        public Builder setCurrencyPerShot(int currency) {
             currencyPerShot = currency;
             return self();
         }

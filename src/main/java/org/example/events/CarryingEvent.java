@@ -13,13 +13,13 @@ public class CarryingEvent {
 
     private static final double distanceFactor = 3.2;
 
-    public CarryingEvent(){
+    public CarryingEvent() {
         GlobalEventHandler handler = MinecraftServer.getGlobalEventHandler();
-        handler.addListener(PlayerTickEndEvent.class, event ->{
+        handler.addListener(PlayerTickEndEvent.class, event -> {
             Player player = event.getPlayer();
-            if (CarrierManager.getItem(player) != null){
+            if (CarrierManager.getItem(player) != null) {
                 Entity entity = CarrierManager.getItem(player);
-                Pos playerPos = player.getPosition().add(0,player.getEyeHeight(),0);
+                Pos playerPos = player.getPosition().add(0, player.getEyeHeight(), 0);
 
                 entity.teleport(playerPos.add(playerPos.direction().normalize().mul(distanceFactor)));
             }

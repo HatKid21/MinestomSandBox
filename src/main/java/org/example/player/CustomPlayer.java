@@ -5,7 +5,6 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
 import org.example.scoreboard.Scoreboard;
-import org.example.weapons.Weapon;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -25,25 +24,25 @@ public class CustomPlayer extends Player {
         return currency;
     }
 
-    public void addCurrency(int value){
+    public void addCurrency(int value) {
         currency += value;
         updateScoreboard();
     }
 
-    private void updateScoreboard(){
+    private void updateScoreboard() {
         scoreboard.putLine(1, Component.text("Currency : " + currency));
     }
 
-    public void consumeCurrency(int value){
+    public void consumeCurrency(int value) {
         currency -= value;
         updateScoreboard();
     }
 
-    public void addAmmo(String weaponId, int value){
-        AMMO.merge(weaponId,value, Integer::sum);
+    public void addAmmo(String weaponId, int value) {
+        AMMO.merge(weaponId, value, Integer::sum);
     }
 
-    public boolean consumeAmmo(String weaponId, int value){
+    public boolean consumeAmmo(String weaponId, int value) {
         int currentAmmo = AMMO.getOrDefault(weaponId, 0);
         if (currentAmmo >= value) {
             AMMO.put(weaponId, currentAmmo - value);
@@ -56,7 +55,7 @@ public class CustomPlayer extends Player {
         return AMMO.get(weaponId);
     }
 
-    public Scoreboard getScoreboard(){
+    public Scoreboard getScoreboard() {
         return scoreboard;
     }
 

@@ -14,20 +14,20 @@ import java.util.Objects;
 
 public class PickUpEvent {
 
-    public PickUpEvent(){
+    public PickUpEvent() {
         GlobalEventHandler handler = MinecraftServer.getGlobalEventHandler();
 
-        handler.addListener(PlayerEntityInteractEvent.class, event ->{
+        handler.addListener(PlayerEntityInteractEvent.class, event -> {
             Player player = event.getPlayer();
             Entity entity = event.getTarget().getVehicle();
             Point interactPosition = event.getInteractPosition();
-            if (entity != null && player.getItemInMainHand().equals(ItemStack.AIR)){
-                if (interactPosition.y() < 0.6){
-                    if (CarrierManager.getItem(player) != null){
+            if (entity != null && player.getItemInMainHand().equals(ItemStack.AIR)) {
+                if (interactPosition.y() < 0.6) {
+                    if (CarrierManager.getItem(player) != null) {
                         player.getAttribute(Attribute.ENTITY_INTERACTION_RANGE).setBaseValue(3);
                         entity.setGlowing(false);
                         CarrierManager.removeItem(player);
-                    } else{
+                    } else {
                         player.getAttribute(Attribute.ENTITY_INTERACTION_RANGE).setBaseValue(10);
                         entity.setGlowing(true);
                         CarrierManager.setItem(player, Objects.requireNonNull(entity));

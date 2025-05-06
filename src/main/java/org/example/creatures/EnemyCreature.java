@@ -13,7 +13,7 @@ public class EnemyCreature extends EntityCreature {
         super(entityType);
     }
 
-    public void onHit(double damage, double knockback, Vec direction){
+    public void onHit(double damage, double knockback, Vec direction) {
         float currentHealth = getHealth();
         setHealth(currentHealth - (float) damage);
         setVelocity(direction.mul(knockback));

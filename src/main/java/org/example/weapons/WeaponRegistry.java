@@ -11,10 +11,14 @@ import java.util.Map;
 
 public class WeaponRegistry {
 
-    public static final Map<String, Weapon> WEAPONS = new HashMap<>();
+    private static final Map<String, Weapon> WEAPONS = new HashMap<>();
 
     private static void registerWeapon(Weapon weapon) {
         WEAPONS.put(weapon.getWeaponID(), weapon);
+    }
+
+    public static Map<String, Weapon> getWEAPONS() {
+        return WEAPONS;
     }
 
     public static Weapon getWeaponById(String id) {
@@ -56,6 +60,7 @@ public class WeaponRegistry {
                 .setTracer(true)
                 .setAttackSpeed(0.6)
                 .setCurrencyPerShot(15)
+                .setMaxAmmoSize(200)
                 .build();
         RangedWeapon sniper = new RangedWeapon.Builder(Material.WOODEN_SHOVEL)
                 .setSound(SoundEvent.ENTITY_FIREWORK_ROCKET_LARGE_BLAST)
@@ -71,6 +76,7 @@ public class WeaponRegistry {
                 .setRange(50)
                 .setAttackSpeed(1)
                 .setCurrencyPerShot(30)
+                .setMaxAmmoSize(50)
                 .build();
         RangedWeapon shotgun = new RangedWeapon.Builder(Material.IRON_HOE)
                 .setSound(SoundEvent.ENTITY_GENERIC_EXPLODE)
@@ -86,6 +92,7 @@ public class WeaponRegistry {
                 .setSpreadFactor(0.1)
                 .setAttackSpeed(1.15)
                 .setCurrencyPerShot(2)
+                .setMaxAmmoSize(75)
                 .build();
 
         registerWeapon(pistol);

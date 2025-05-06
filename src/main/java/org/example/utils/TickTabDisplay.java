@@ -13,23 +13,23 @@ public class TickTabDisplay {
 
     private Task taskMonitor;
 
-    public void start(){
-        taskMonitor = MinecraftServer.getSchedulerManager().submitTask(() ->{
-            for(Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()){
-                player.sendPlayerListHeaderAndFooter(header,footer);
+    public void start() {
+        taskMonitor = MinecraftServer.getSchedulerManager().submitTask(() -> {
+            for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
+                player.sendPlayerListHeaderAndFooter(header, footer);
             }
             return TaskSchedule.seconds(2);
         });
     }
 
-    public void stop(){
-        if (taskMonitor != null && taskMonitor.isAlive()){
+    public void stop() {
+        if (taskMonitor != null && taskMonitor.isAlive()) {
             taskMonitor.cancel();
             taskMonitor = null;
         }
     }
 
-    public void setFooter(Component footer){
+    public void setFooter(Component footer) {
         this.footer = footer;
     }
 

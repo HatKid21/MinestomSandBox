@@ -1,7 +1,6 @@
 package org.example.creatures;
 
 import net.kyori.adventure.text.Component;
-import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.Player;
@@ -10,15 +9,13 @@ import net.minestom.server.entity.ai.goal.RandomStrollGoal;
 import net.minestom.server.entity.ai.target.ClosestEntityTarget;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.entity.attribute.Attribute;
-import net.minestom.server.entity.metadata.monster.zombie.ZombieMeta;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.utils.time.TimeUnit;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ZombieTankCreature extends EnemyCreature{
+public class ZombieTankCreature extends EnemyCreature {
 
 
     public ZombieTankCreature() {
@@ -34,11 +31,11 @@ public class ZombieTankCreature extends EnemyCreature{
 
         addAIGroup(
                 List.of(
-                        new MeleeAttackGoal(this,1.6,20, TimeUnit.SERVER_TICK),
-                        new RandomStrollGoal(this,20)
+                        new MeleeAttackGoal(this, 1.6, 20, TimeUnit.SERVER_TICK),
+                        new RandomStrollGoal(this, 20)
                 ),
-                List.of(new LastEntityDamagerTarget(this,10),
-                        new ClosestEntityTarget(this,10, entity -> entity instanceof Player)
+                List.of(new LastEntityDamagerTarget(this, 10),
+                        new ClosestEntityTarget(this, 10, entity -> entity instanceof Player)
                 )
         );
 
