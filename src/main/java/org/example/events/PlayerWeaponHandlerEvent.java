@@ -8,7 +8,7 @@ import net.minestom.server.event.player.PlayerHandAnimationEvent;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
-import org.example.weapons.AmmoManager;
+import org.example.player.CustomPlayer;
 import org.example.weapons.RangedWeapon;
 import org.example.weapons.Weapon;
 import org.example.weapons.WeaponRegistry;
@@ -30,14 +30,14 @@ public class PlayerWeaponHandlerEvent {
         });
 
         handler.addListener(PlayerChangeHeldSlotEvent.class, event ->{
-            Player player = event.getPlayer();
+            CustomPlayer player = (CustomPlayer) event.getPlayer();
             ItemStack item = event.getItemInNewSlot();
             if (item.hasTag(Tag.String("weapon_id"))){
                 String weaponId = item.getTag(Tag.String("weapon_id"));
                 Weapon weapon = WeaponRegistry.getWeaponById(weaponId);
                 if (weapon instanceof RangedWeapon){
                     player.setExp(1);
-                    player.setLevel(AmmoManager.getAmmo(player,weaponId));
+                    player.setLevel(player.getAmmo(weaponId));
                 }
             } else{
                 player.setExp(0);

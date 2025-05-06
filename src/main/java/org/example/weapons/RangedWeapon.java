@@ -14,7 +14,8 @@ import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.SoundEffectPacket;
 import net.minestom.server.tag.Tag;
 import org.example.creatures.EnemyCreature;
-import org.example.economy.CurrencyManager;
+
+import org.example.player.CustomPlayer;
 import org.example.utils.Ray;
 
 import java.util.Collection;
@@ -55,6 +56,8 @@ public class RangedWeapon extends Weapon implements Reloadable {
 
     public void reload(Player player) {
 
+        CustomPlayer customPlayer = (CustomPlayer) player;
+
         if (isReloading) {
             return;
         }
@@ -75,11 +78,11 @@ public class RangedWeapon extends Weapon implements Reloadable {
             String weaponID = item.getTag(weaponIdTag);
             int currentAmmo = item.getTag(ammoTag);
             int dif = magazine - currentAmmo;
-            int currentSavedAmmo = AmmoManager.getAmmo(player, weaponID);
-            if (AmmoManager.consumeAmmo(player, weaponID, dif)) {
+            int currentSavedAmmo = customPlayer.getAmmo(weaponID);
+            if (customPlayer.consumeAmmo(weaponID,dif)) {
                 ItemStack updatedItem = item.withTag(ammoTag, magazine).withAmount(magazine);
                 player.getInventory().setItemStack(weaponHeldSlot,updatedItem);
-            } else if (AmmoManager.consumeAmmo(player, weaponID, currentSavedAmmo)) {
+            } else if (((CustomPlayer) player).consumeAmmo(weaponID,currentSavedAmmo)) {
                 ItemStack updatedItem = item.withTag(ammoTag, currentSavedAmmo).withAmount(currentAmmo + currentSavedAmmo);
                 player.getInventory().setItemStack(weaponHeldSlot,updatedItem);
             }
@@ -97,9 +100,10 @@ public class RangedWeapon extends Weapon implements Reloadable {
 
     private void updatePlayerAmmo(Player player, byte slot) {
         ItemStack itemStack = player.getInventory().getItemStack(slot);
+        CustomPlayer customPlayer = (CustomPlayer) player;
         if (itemStack.hasTag(Tag.String("weapon_id"))) {
             String weaponId = itemStack.getTag(Tag.String("weapon_id"));
-            int currentAmmo = AmmoManager.getAmmo(player, weaponId);
+            int currentAmmo = customPlayer.getAmmo(weaponId);
             player.setLevel(currentAmmo);
         }
     }
@@ -134,6 +138,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
 
     @Override
     public void onUse(Player player, PlayerUseItemEvent event) {
+        CustomPlayer customPlayer = (CustomPlayer) player;
         if (isReloading){
             return;
         }
@@ -177,7 +182,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
 
                 for (Entity target : targets) {
                     if (target instanceof EnemyCreature enemy) {
-                        CurrencyManager.addCurrency(player, currencyPerShot);
+                        customPlayer.addCurrency(currencyPerShot);
                         enemy.onHit(getDamage(), getKnockback(), direction);
                     }
                 }

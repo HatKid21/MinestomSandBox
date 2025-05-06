@@ -4,7 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.entity.Player;
-import org.example.weapons.AmmoManager;
+import org.example.player.CustomPlayer;
 
 public class AddAmmoCommand extends Command {
 
@@ -22,9 +22,9 @@ public class AddAmmoCommand extends Command {
         addSyntax((sender,context) ->{
             String weaponID = context.get(weaponIdArgument);
             int amount = context.get(amountArgument);
-            Player player = (Player) sender;
-            AmmoManager.addAmmo(player,weaponID,amount);
-            player.sendMessage(Component.text(amount + " ammo has added to " + weaponID));
+            CustomPlayer customPlayer = (CustomPlayer) sender;
+            customPlayer.addAmmo(weaponID,amount);
+            customPlayer.sendMessage(Component.text(amount + " ammo has added to " + weaponID));
         },weaponIdArgument,amountArgument);
 
 

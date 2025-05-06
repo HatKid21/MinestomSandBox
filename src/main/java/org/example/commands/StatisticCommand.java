@@ -3,7 +3,7 @@ package org.example.commands;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.entity.Player;
-import org.example.weapons.AmmoManager;
+import org.example.player.CustomPlayer;
 
 public class StatisticCommand extends Command {
 
@@ -11,8 +11,8 @@ public class StatisticCommand extends Command {
         super("stat");
 
         setDefaultExecutor((sender, context) ->{
-            Player player = (Player) sender;
-            player.sendMessage(Component.text(AmmoManager.getAmmo(player,"pistol")));
+            CustomPlayer player = (CustomPlayer) sender;
+            player.sendMessage(Component.text(player.getAmmo("pistol")));
         });
 
     }

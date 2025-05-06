@@ -21,8 +21,8 @@ import org.example.commands.AddAmmoCommand;
 import org.example.commands.EntitySpawnCommand;
 import org.example.commands.StatisticCommand;
 import org.example.commands.ZombieCreatureSpawnCommand;
-import org.example.economy.CurrencyManager;
 import org.example.events.*;
+import org.example.player.CustomPlayer;
 import org.example.scoreboard.Scoreboard;
 import org.example.utils.GeneratorManager;
 import org.example.utils.TickTabDisplay;
@@ -39,6 +39,7 @@ public class Server {
 
     public static void main(String[] args) {
         MinecraftServer server = MinecraftServer.init();
+        MinecraftServer.getConnectionManager().setPlayerProvider(CustomPlayer::new);
 
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
 
@@ -70,7 +71,7 @@ public class Server {
         });
 
         eventHandler.addListener(PlayerSpawnEvent.class,event ->{
-            Player player = event.getPlayer();
+            Player player =  event.getPlayer();
             player.setGameMode(GameMode.SURVIVAL);
             Entity entity = new Entity(EntityType.ITEM_DISPLAY);
             Entity entity1 = new Entity(EntityType.ARMOR_STAND);
@@ -81,8 +82,8 @@ public class Server {
             meta.setItemStack(ItemStack.of(Material.GOLD_INGOT));
             entity.setInstance(instance, player.getPosition());
             entity.addPassenger(entity1);
-            Scoreboard playerScoreboard = new Scoreboard(player);
-            CurrencyManager.registerPlayer(player);
+            CustomPlayer customPlayer = (CustomPlayer) player;
+            customPlayer.getScoreboard().addViewer(player);
         });
 
         registerEvents();
