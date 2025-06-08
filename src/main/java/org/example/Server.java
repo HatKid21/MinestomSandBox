@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandManager;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.*;
 import net.minestom.server.entity.metadata.EntityMeta;
 import net.minestom.server.entity.metadata.display.ItemDisplayMeta;
@@ -11,17 +12,17 @@ import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 
+import net.minestom.server.event.player.PlayerSwapItemEvent;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.*;
 import net.minestom.server.instance.anvil.AnvilLoader;
+import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.monitoring.TickMonitor;
-import org.example.commands.AddAmmoCommand;
-import org.example.commands.EntitySpawnCommand;
-import org.example.commands.StatisticCommand;
-import org.example.commands.ZombieCreatureSpawnCommand;
+import org.example.commands.*;
 import org.example.events.*;
+import org.example.planet.Planet;
 import org.example.player.CustomPlayer;
 import org.example.utils.GeneratorManager;
 import org.example.utils.TickTabDisplay;
@@ -73,6 +74,9 @@ public class Server {
             Player player = event.getPlayer();
             player.setGameMode(GameMode.SURVIVAL);
             Entity entity = new Entity(EntityType.ITEM_DISPLAY);
+            ItemDisplayMeta itemDisplayMeta = (ItemDisplayMeta) entity.getEntityMeta();
+            itemDisplayMeta.setTransformationInterpolationDuration(1);
+            itemDisplayMeta.setPosRotInterpolationDuration(1);
             Entity entity1 = new Entity(EntityType.ARMOR_STAND);
             EntityMeta entityMeta = entity1.getEntityMeta();
             entityMeta.setInvisible(true);
@@ -83,6 +87,18 @@ public class Server {
             entity.addPassenger(entity1);
             CustomPlayer customPlayer = (CustomPlayer) player;
             customPlayer.getScoreboard().addViewer(player);
+            Planet planet = new Planet(Block.REDSTONE_BLOCK,0.1,100,false);
+            planet.spawn(instance,new Pos(-50,79  ,-50));
+
+        });
+
+        eventHandler.addListener(PlayerSwapItemEvent.class,event ->{
+            Player player = event.getPlayer();
+            Vec dir = player.getPosition().direction().normalize();
+            Pos pos = player.getPosition().add(player.getEyeHeight()).add(dir.mul(5));
+            Planet planet = new Planet(Block.DIAMOND_BLOCK,0.2,1,true);
+            planet.spawn(instance,pos);
+            planet.setVelocity(dir.mul(10));
         });
 
         registerEvents();
@@ -102,6 +118,8 @@ public class Server {
         commandManager.register(new ZombieCreatureSpawnCommand());
         commandManager.register(new StatisticCommand());
         commandManager.register(new AddAmmoCommand());
+        commandManager.register(new PlanetCreationCommand());
+        commandManager.register(new DemonstrationCommand());
     }
 
     public static void registerEvents() {
@@ -110,7 +128,8 @@ public class Server {
         new PlayerWeaponHandlerEvent();
         new PunchEvent();
         new GetPlayerSpawnItemsEvent();
-        new MusicEvent();
+//        new MusicEvent();
+        new PlanetEvent();
     }
 
 }
