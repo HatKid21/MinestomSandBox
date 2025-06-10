@@ -102,7 +102,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
 
         player.sendActionBar(Component.text("Reloading..."));
         isReloading = true;
-        schedulerManager.scheduleTask(reloadTask, TaskSchedule.seconds((long) reloadTime * 1000), TaskSchedule.stop());
+        schedulerManager.scheduleTask(reloadTask, TaskSchedule.millis((long) (reloadTime * 1000)), TaskSchedule.stop());
     }
 
     private void updatePlayerAmmo(Player player, byte slot) {

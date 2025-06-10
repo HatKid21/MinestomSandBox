@@ -58,7 +58,7 @@ public class WeaponRegistry {
                 .setReloadTime(2.3)
                 .setRange(30)
                 .setTracer(true)
-                .setAttackSpeed(0.6)
+                .setAttackSpeed(0.4)
                 .setCurrencyPerShot(15)
                 .setMaxAmmoSize(200)
                 .build();

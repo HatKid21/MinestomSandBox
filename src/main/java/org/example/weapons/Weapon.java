@@ -1,9 +1,12 @@
 package org.example.weapons;
 
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.item.Material;
 import net.minestom.server.sound.SoundEvent;
+import net.minestom.server.timer.SchedulerManager;
+import net.minestom.server.timer.TaskSchedule;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -56,13 +59,13 @@ public abstract class Weapon {
         }
         isAttackDelay = true;
 
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        SchedulerManager schedulerManager = MinecraftServer.getSchedulerManager();
 
         task = () -> {
             isAttackDelay = false;
         };
-
-        executorService.schedule(task, (long) (attackSpeed * 1000), TimeUnit.MILLISECONDS);
+        System.out.println(attackSpeed*1000);
+        schedulerManager.scheduleTask(task, TaskSchedule.millis((long) (attackSpeed * 1000)), TaskSchedule.stop());
 
     }
 
