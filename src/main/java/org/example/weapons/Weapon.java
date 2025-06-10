@@ -64,7 +64,6 @@ public abstract class Weapon {
         task = () -> {
             isAttackDelay = false;
         };
-        System.out.println(attackSpeed*1000);
         schedulerManager.scheduleTask(task, TaskSchedule.millis((long) (attackSpeed * 1000)), TaskSchedule.stop());
 
     }

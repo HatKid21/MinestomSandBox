@@ -77,7 +77,7 @@ public class Ray {
 
     private Entity collisionCheck(Collection<Entity> entities, Pos currentPos) {
         for (Entity entity : entities) {
-            if (boundingBox.intersectEntity(currentPos, entity)) {
+            if (boundingBox.intersectEntity(currentPos, entity) && entity instanceof EnemyCreature) {
                 return entity;
             }
         }
