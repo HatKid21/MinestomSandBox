@@ -2,6 +2,7 @@ package org.example.weapons;
 
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
@@ -13,6 +14,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.SoundEffectPacket;
 import net.minestom.server.tag.Tag;
+import net.minestom.server.timer.SchedulerManager;
+import net.minestom.server.timer.TaskSchedule;
 import org.example.creatures.EnemyCreature;
 
 import org.example.player.CustomPlayer;
@@ -66,7 +69,8 @@ public class RangedWeapon extends Weapon implements Reloadable {
         if (isReloading) {
             return;
         }
-        ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+
+        SchedulerManager schedulerManager = MinecraftServer.getSchedulerManager();
 
         byte weaponHeldSlot = player.getHeldSlot();
 
@@ -79,7 +83,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
             return;
         }
 
-        Runnable task = () -> {
+        Runnable reloadTask = () -> {
             String weaponID = item.getTag(weaponIdTag);
             int currentAmmo = item.getTag(ammoTag);
             int dif = magazine - currentAmmo;
@@ -98,9 +102,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
 
         player.sendActionBar(Component.text("Reloading..."));
         isReloading = true;
-        scheduledExecutorService.schedule(task, (long) reloadTime * 1000, TimeUnit.MILLISECONDS);
-
-
+        schedulerManager.scheduleTask(reloadTask, TaskSchedule.seconds((long) reloadTime * 1000), TaskSchedule.stop());
     }
 
     private void updatePlayerAmmo(Player player, byte slot) {
