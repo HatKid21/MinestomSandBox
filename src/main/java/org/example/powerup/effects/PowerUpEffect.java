@@ -1,6 +1,6 @@
 package org.example.powerup.effects;
 
-public interface IPowerUpEffect {
+public interface PowerUpEffect {
 
     void apply();
 

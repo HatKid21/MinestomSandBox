@@ -13,7 +13,7 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
-import org.example.powerup.effects.IPowerUpEffect;
+import org.example.powerup.effects.PowerUpEffect;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -24,9 +24,9 @@ public class PowerUp extends Entity {
 
     private static final Collection<PowerUp> POWER_UPS = new ArrayList<>();
 
-    private final IPowerUpEffect powerUpEffect;
+    private final PowerUpEffect powerUpEffect;
 
-    public PowerUp(Material material, IPowerUpEffect powerUpEffect, Component displayName) {
+    public PowerUp(Material material, PowerUpEffect powerUpEffect, Component displayName) {
         super(EntityType.ITEM_DISPLAY);
         setCustomName(displayName);
         setCustomNameVisible(true);

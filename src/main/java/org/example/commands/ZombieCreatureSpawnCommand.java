@@ -4,9 +4,12 @@ import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
-import org.example.creatures.ZombieCreature;
+import org.example.enemy.Enemy;
+import org.example.enemy.EnemyFactory;
 
 public class ZombieCreatureSpawnCommand extends Command {
+
+    private static final EnemyFactory factory = new EnemyFactory();
 
     public ZombieCreatureSpawnCommand() {
         super("zombie");
@@ -14,8 +17,8 @@ public class ZombieCreatureSpawnCommand extends Command {
         setDefaultExecutor((sender, context) -> {
             Player player = (Player) sender;
             Instance instance = player.getInstance();
-            ZombieCreature zombieCreature = new ZombieCreature();
-            zombieCreature.setInstance(instance, player.getPosition());
+            Enemy zombie = factory.createEnemy("zombie");
+            zombie.setInstance(instance, player.getPosition());
             player.sendMessage("Zombie has successfully created");
         });
 
@@ -26,8 +29,8 @@ public class ZombieCreatureSpawnCommand extends Command {
             Player player = (Player) sender;
             Instance instance = player.getInstance();
             for (int i = 0; i < amount; i++) {
-                ZombieCreature zombieCreature = new ZombieCreature();
-                zombieCreature.setInstance(instance, player.getPosition());
+                Enemy enemy = factory.createEnemy("zombie");
+                enemy.setInstance(instance, player.getPosition());
             }
             player.sendMessage(amount + "zombies has successfully created");
         }, numberArgument);

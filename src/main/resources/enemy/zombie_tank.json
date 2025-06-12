@@ -1,0 +1,12 @@
+{
+  "name" : "Zombie Tank",
+  "entityType" : "minecraft:zombie",
+  "health" : 50,
+  "speed" : 0.06,
+  "damage" : 5,
+  "aiStrategyType" : "MeleeAttackAi",
+  "helmet" : "minecraft:iron_helmet",
+  "chestplate" : "minecraft:iron_chestplate",
+  "leggings" : "minecraft:iron_leggings",
+  "boots" : "minecraft:iron_boots"
+}

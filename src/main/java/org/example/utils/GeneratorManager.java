@@ -4,13 +4,10 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
-import org.example.creatures.EnemyCreature;
-import org.example.creatures.ZombieCreature;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Supplier;
 
 public class GeneratorManager {
 
@@ -59,8 +56,8 @@ public class GeneratorManager {
 
                         Pos globalPosition = new Pos(worldX, y, worldZ);
                         globalPosition = globalPosition.withYaw(180);
-                        Supplier<EnemyCreature> supplier = ZombieCreature::new;
-                        Generator generator = new Generator(chunk.getInstance(), supplier, 20, globalPosition);
+                        String enemyName = "zombie";
+                        Generator generator = new Generator(chunk.getInstance(), enemyName, 20, globalPosition);
                         GENERATORS.add(generator);
 //                        System.out.println("Generator added at (" + globalPosition.x() + " " + globalPosition.y() + " " + globalPosition.z() + ")");
                     }

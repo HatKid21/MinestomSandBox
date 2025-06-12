@@ -6,24 +6,26 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
-import org.example.creatures.EnemyCreature;
+import org.example.enemy.Enemy;
+import org.example.enemy.EnemyFactory;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Supplier;
 
 public class Generator {
 
+    private static final EnemyFactory factory = new EnemyFactory();
+
     private final int delaySeconds;
-    private final Supplier<EnemyCreature> supplier;
+    private final String enemyName;
     private final Pos pos;
     private final Instance instance;
 
-    private EnemyCreature currentEnemy;
+    private Enemy currentEnemy;
     private Task monitoringTask;
 
-    public Generator(Instance instance, Supplier<EnemyCreature> creature, int delaySeconds, Pos pos) {
-        this.supplier = creature;
+    public Generator(Instance instance, String enemyName, int delaySeconds, Pos pos) {
+        this.enemyName = enemyName;
         this.delaySeconds = delaySeconds;
         this.pos = pos;
         this.instance = instance;
@@ -55,7 +57,7 @@ public class Generator {
     }
 
     private void spawnNewEnemy() {
-        EnemyCreature newEnemy = supplier.get();
+        Enemy newEnemy = factory.createEnemy(enemyName);
         if (!Objects.requireNonNull(instance.getChunkAt(pos)).isLoaded()) {
             instance.loadChunk(pos);
         }

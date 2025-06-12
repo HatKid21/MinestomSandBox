@@ -16,16 +16,13 @@ import net.minestom.server.network.packet.server.play.SoundEffectPacket;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.SchedulerManager;
 import net.minestom.server.timer.TaskSchedule;
-import org.example.creatures.EnemyCreature;
+import org.example.enemy.Enemy;
 
 import org.example.player.CustomPlayer;
 import org.example.utils.Ray;
 
 import java.util.Collection;
 import java.util.Random;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class RangedWeapon extends Weapon implements Reloadable {
 
@@ -188,7 +185,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
                 Collection<Entity> targets = ray.launch();
 
                 for (Entity target : targets) {
-                    if (target instanceof EnemyCreature enemy) {
+                    if (target instanceof Enemy enemy) {
                         customPlayer.addCurrency(currencyPerShot);
                         enemy.onHit(getDamage(), getKnockback(), direction);
                     }

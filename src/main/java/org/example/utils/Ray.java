@@ -8,7 +8,7 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
-import org.example.creatures.EnemyCreature;
+import org.example.enemy.Enemy;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -65,7 +65,7 @@ public class Ray {
                     position = position.add(direction.mul(step));
                     continue;
                 }
-                if (collisionTarget instanceof EnemyCreature) {
+                if (collisionTarget instanceof Enemy) {
                     hitTargets.add(collisionTarget);
                 }
             }
@@ -77,7 +77,7 @@ public class Ray {
 
     private Entity collisionCheck(Collection<Entity> entities, Pos currentPos) {
         for (Entity entity : entities) {
-            if (boundingBox.intersectEntity(currentPos, entity) && entity instanceof EnemyCreature) {
+            if (boundingBox.intersectEntity(currentPos, entity) && entity instanceof Enemy) {
                 return entity;
             }
         }

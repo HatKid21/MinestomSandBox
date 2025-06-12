@@ -12,7 +12,7 @@ import org.example.weapons.WeaponRegistry;
 
 import java.util.Collection;
 
-public class AmmoSupplierEffect implements IPowerUpEffect {
+public class AmmoSupplierEffect implements PowerUpEffect {
 
     public void apply() {
         ConnectionManager connectionManager = MinecraftServer.getConnectionManager();

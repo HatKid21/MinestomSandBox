@@ -1,0 +1,14 @@
+{
+  "name" : "Zombie",
+  "entityType" : "minecraft:zombie",
+  "health" : 20,
+  "speed" : 0.1,
+  "damage" : 1,
+  "aiStrategyType" : "MeleeAttackAi",
+  "powerUpDrops" : [
+    {
+      "powerUpName" : "AmmoSupplier",
+      "chance" : 0.01
+    }
+  ]
+}
