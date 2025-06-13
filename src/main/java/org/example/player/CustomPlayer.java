@@ -1,7 +1,6 @@
 package org.example.player;
 
 import net.kyori.adventure.text.Component;
-import net.minestom.server.entity.Player;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
 import org.example.scoreboard.Scoreboard;
@@ -10,8 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomPlayer extends Player {
-
+public class CustomPlayer extends RegenerativePlayer {
     private int currency = 0;
     private final Map<String, Integer> AMMO = new HashMap<>();
     private final Scoreboard scoreboard = new Scoreboard(this);

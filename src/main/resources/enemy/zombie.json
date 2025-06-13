@@ -3,7 +3,7 @@
   "entityType" : "minecraft:zombie",
   "health" : 20,
   "speed" : 0.1,
-  "damage" : 1,
+  "damage" : 0.5,
   "aiStrategyType" : "MeleeAttackAi",
   "powerUpDrops" : [
     {

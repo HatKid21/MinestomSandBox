@@ -130,6 +130,8 @@ public class Server {
         new GetPlayerSpawnItemsEvent();
 //        new MusicEvent();
         new PlanetEvent();
+        new DamageEvent();
+        new EnemyAttackEvent();
     }
 
 }
