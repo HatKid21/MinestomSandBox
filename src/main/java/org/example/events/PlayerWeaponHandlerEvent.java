@@ -37,7 +37,7 @@ public class PlayerWeaponHandlerEvent {
                 Weapon weapon = WeaponRegistry.getWeaponById(weaponId);
                 if (weapon instanceof RangedWeapon) {
                     player.setExp(1);
-                    player.setLevel(player.getAmmo(weaponId));
+                    player.setLevel(player.getAmmoModule().get(weaponId));
                 }
             } else {
                 player.setExp(0);

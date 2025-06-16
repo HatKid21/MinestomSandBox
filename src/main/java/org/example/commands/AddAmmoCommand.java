@@ -23,7 +23,7 @@ public class AddAmmoCommand extends Command {
             String weaponID = context.get(weaponIdArgument);
             int amount = context.get(amountArgument);
             CustomPlayer customPlayer = (CustomPlayer) sender;
-            customPlayer.addAmmo(weaponID, amount);
+            customPlayer.getAmmoModule().add(weaponID,amount);
             customPlayer.sendMessage(Component.text(amount + " ammo has added to " + weaponID));
         }, weaponIdArgument, amountArgument);
 

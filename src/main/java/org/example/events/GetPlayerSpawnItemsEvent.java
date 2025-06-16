@@ -16,9 +16,9 @@ public class GetPlayerSpawnItemsEvent {
             RangedWeapon pistol = (RangedWeapon) WeaponRegistry.getWeaponById("pistol");
             RangedWeapon sniper = (RangedWeapon) WeaponRegistry.getWeaponById("sniper");
             RangedWeapon shotgun = (RangedWeapon) WeaponRegistry.getWeaponById("shotgun");
-            player.addAmmo(pistol.getWeaponID(), pistol.getMaxAmmoSize());
-            player.addAmmo(sniper.getWeaponID(), sniper.getMaxAmmoSize());
-            player.addAmmo(shotgun.getWeaponID(), shotgun.getMaxAmmoSize());
+            player.getAmmoModule().add(pistol.getWeaponID(), pistol.getMaxAmmoSize());
+            player.getAmmoModule().add(sniper.getWeaponID(), sniper.getMaxAmmoSize());
+            player.getAmmoModule().add(shotgun.getWeaponID(), shotgun.getMaxAmmoSize());
             player.getInventory().addItemStack(WeaponRegistry.getWeaponItem(pistol.getWeaponID()));
             player.getInventory().addItemStack(WeaponRegistry.getWeaponItem(sniper.getWeaponID()));
             player.getInventory().addItemStack(WeaponRegistry.getWeaponItem(shotgun.getWeaponID()));

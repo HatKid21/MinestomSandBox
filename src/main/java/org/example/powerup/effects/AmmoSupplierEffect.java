@@ -23,8 +23,8 @@ public class AmmoSupplierEffect implements PowerUpEffect {
                 Weapon weapon = WeaponRegistry.getWeaponById(weaponID);
                 if (weapon instanceof RangedWeapon rangedWeapon) {
                     int maxAmmoSize = rangedWeapon.getMaxAmmoSize();
-                    int dif = maxAmmoSize - customPlayer.getAmmo(weaponID);
-                    customPlayer.addAmmo(weaponID, dif);
+                    int dif = maxAmmoSize - customPlayer.getAmmoModule().get(weaponID);
+                    customPlayer.getAmmoModule().add(weaponID, dif);
                 }
             }
             Title title = Title.title(Component.text("Ammo refresh!"), Component.empty());

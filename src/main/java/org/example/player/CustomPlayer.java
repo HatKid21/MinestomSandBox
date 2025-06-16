@@ -1,56 +1,40 @@
 package org.example.player;
 
 import net.kyori.adventure.text.Component;
+import net.minestom.server.entity.Player;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
 import org.example.scoreboard.Scoreboard;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
+public class CustomPlayer extends Player {
 
-public class CustomPlayer extends RegenerativePlayer {
-    private int currency = 0;
-    private final Map<String, Integer> AMMO = new HashMap<>();
+    private final RegenerationModule regenerationModule;
+    private final AmmoModule ammoModule;
+    private final CurrencyModule currencyModule;
     private final Scoreboard scoreboard = new Scoreboard(this);
 
     public CustomPlayer(@NotNull PlayerConnection playerConnection, @NotNull GameProfile gameProfile) {
         super(playerConnection, gameProfile);
+        this.currencyModule = new CurrencyModule(this);
+        this.ammoModule = new AmmoModule();
+        this.regenerationModule = new RegenerationModule(this);
     }
 
-    public int getCurrency() {
-        return currency;
+    public RegenerationModule getRegenerationModule() {
+        return regenerationModule;
     }
 
-    public void addCurrency(int value) {
-        currency += value;
-        updateScoreboard();
+    public CurrencyModule getCurrencyModule() {
+        return currencyModule;
     }
 
-    private void updateScoreboard() {
-        scoreboard.putLine(1, Component.text("Currency : " + currency));
+    public AmmoModule getAmmoModule() {
+        return ammoModule;
     }
 
-    public void consumeCurrency(int value) {
-        currency -= value;
-        updateScoreboard();
-    }
-
-    public void addAmmo(String weaponId, int value) {
-        AMMO.merge(weaponId, value, Integer::sum);
-    }
-
-    public boolean consumeAmmo(String weaponId, int value) {
-        int currentAmmo = AMMO.getOrDefault(weaponId, 0);
-        if (currentAmmo >= value) {
-            AMMO.put(weaponId, currentAmmo - value);
-            return true;
-        }
-        return false;
-    }
-
-    public int getAmmo(String weaponId) {
-        return AMMO.get(weaponId);
+    public void updateScoreboard() {
+        scoreboard.putLine(1, Component.text("Currency : " + currencyModule.get()));
     }
 
     public Scoreboard getScoreboard() {

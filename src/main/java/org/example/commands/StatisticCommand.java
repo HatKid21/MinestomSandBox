@@ -11,7 +11,7 @@ public class StatisticCommand extends Command {
 
         setDefaultExecutor((sender, context) -> {
             CustomPlayer player = (CustomPlayer) sender;
-            player.sendMessage(Component.text(player.getAmmo("pistol")));
+            player.sendMessage(Component.text(player.getAmmoModule().get("pistol")));
         });
 
     }

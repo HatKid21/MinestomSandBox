@@ -18,6 +18,7 @@ import net.minestom.server.timer.SchedulerManager;
 import net.minestom.server.timer.TaskSchedule;
 import org.example.enemy.Enemy;
 
+import org.example.player.AmmoModule;
 import org.example.player.CustomPlayer;
 import org.example.utils.Ray;
 
@@ -84,11 +85,12 @@ public class RangedWeapon extends Weapon implements Reloadable {
             String weaponID = item.getTag(weaponIdTag);
             int currentAmmo = item.getTag(ammoTag);
             int dif = magazine - currentAmmo;
-            int currentSavedAmmo = customPlayer.getAmmo(weaponID);
-            if (customPlayer.consumeAmmo(weaponID, dif)) {
+            int currentSavedAmmo = customPlayer.getAmmoModule().get(weaponID);
+            AmmoModule ammoModule = customPlayer.getAmmoModule();
+            if (ammoModule.consume(weaponID, dif)) {
                 ItemStack updatedItem = item.withTag(ammoTag, magazine).withAmount(magazine);
                 player.getInventory().setItemStack(weaponHeldSlot, updatedItem);
-            } else if (((CustomPlayer) player).consumeAmmo(weaponID, currentSavedAmmo)) {
+            } else if ((ammoModule.consume(weaponID, currentSavedAmmo))) {
                 ItemStack updatedItem = item.withTag(ammoTag, currentSavedAmmo).withAmount(currentAmmo + currentSavedAmmo);
                 player.getInventory().setItemStack(weaponHeldSlot, updatedItem);
             }
@@ -107,7 +109,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
         CustomPlayer customPlayer = (CustomPlayer) player;
         if (itemStack.hasTag(Tag.String("weapon_id"))) {
             String weaponId = itemStack.getTag(Tag.String("weapon_id"));
-            int currentAmmo = customPlayer.getAmmo(weaponId);
+            int currentAmmo = customPlayer.getAmmoModule().get(weaponId);
             player.setLevel(currentAmmo);
         }
     }
@@ -186,7 +188,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
 
                 for (Entity target : targets) {
                     if (target instanceof Enemy enemy) {
-                        customPlayer.addCurrency(currencyPerShot);
+                        customPlayer.getCurrencyModule().add(currencyPerShot);
                         enemy.onHit(getDamage(), getKnockback(), direction);
                     }
                 }

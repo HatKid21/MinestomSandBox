@@ -13,7 +13,7 @@ public class DamageEvent {
         handler.addListener(EntityDamageEvent.class, event ->{
             LivingEntity entity = event.getEntity();
             if (entity instanceof CustomPlayer player){
-                player.startRegenerationDelay();
+                player.getRegenerationModule().startRegenerationDelay();
             }
         });
 
