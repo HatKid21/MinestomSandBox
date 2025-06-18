@@ -1,0 +1,18 @@
+{
+  "type" : "ranged",
+  "weaponId" : "shotgun",
+  "material" : "minecraft:iron_hoe",
+  "sound" : "minecraft:entity.generic.explode",
+  "pitch" : 2,
+  "damage" : 1,
+  "knockback" : 5,
+  "magazine" : 6,
+  "spreadFactor" : 0.1,
+  "reloadTime" : 4.3,
+  "range" : 15,
+  "tracer" : true,
+  "attackSpeed" : 1.15,
+  "currencyPerBullet" : 2,
+  "maxAmmoSize" : 75,
+  "bulletsPerShot" : 20
+}

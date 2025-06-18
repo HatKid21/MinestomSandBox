@@ -1,0 +1,17 @@
+{
+  "type" : "ranged",
+  "material" : "minecraft:wooden_hoe",
+  "weaponId" : "pistol",
+  "sound" : "minecraft:entity.firework_rocket.blast",
+  "pitch" : 1.8,
+  "damage" : 2,
+  "knockback" : 1.1,
+  "magazine" : 10,
+  "spreadFactor" : 0.02,
+  "reloadTime" : 2.3,
+  "range" : 30,
+  "tracer" : true,
+  "attackSpeed" : 0.4,
+  "currencyPerBullet" : 15,
+  "maxAmmoSize" : 200
+}

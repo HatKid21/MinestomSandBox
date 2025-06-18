@@ -21,12 +21,13 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.monitoring.TickMonitor;
 import org.example.commands.*;
+import org.example.enemy.EnemyFactory;
 import org.example.events.*;
 import org.example.planet.Planet;
 import org.example.player.CustomPlayer;
 import org.example.utils.GeneratorManager;
 import org.example.utils.TickTabDisplay;
-import org.example.weapons.WeaponRegistry;
+import org.example.weapons.WeaponFactory;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,6 +37,17 @@ public class Server {
 
     public static InstanceContainer instance;
     public static TickTabDisplay tabDisplay = new TickTabDisplay();
+
+    private static final WeaponFactory WEAPON_FACTORY = new WeaponFactory();
+    private static final EnemyFactory ENEMY_FACTORY = new EnemyFactory();
+
+    public static WeaponFactory getWeaponFactory() {
+        return WEAPON_FACTORY;
+    }
+
+    public static EnemyFactory getEnemyFactory() {
+        return ENEMY_FACTORY;
+    }
 
     public static void main(String[] args) {
         MinecraftServer server = MinecraftServer.init();
@@ -103,7 +115,7 @@ public class Server {
 
         registerEvents();
         registerCommands();
-        WeaponRegistry.init();
+//        WeaponRegistry.init();
 
         instance.setChunkSupplier(LightingChunk::new);
 

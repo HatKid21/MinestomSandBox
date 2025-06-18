@@ -8,21 +8,25 @@ import net.minestom.server.event.player.PlayerHandAnimationEvent;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
+import org.example.Server;
 import org.example.player.CustomPlayer;
 import org.example.weapons.RangedWeapon;
 import org.example.weapons.Weapon;
-import org.example.weapons.WeaponRegistry;
+import org.example.weapons.WeaponFactory;
 
 public class PlayerWeaponHandlerEvent {
 
+    private final WeaponFactory weaponFactory;
+
     public PlayerWeaponHandlerEvent() {
+        this.weaponFactory = Server.getWeaponFactory();
         GlobalEventHandler handler = MinecraftServer.getGlobalEventHandler();
         handler.addListener(PlayerHandAnimationEvent.class, event -> {
             Player player = event.getPlayer();
             ItemStack itemStack = player.getItemInMainHand();
             Tag<String> weaponIdTag = Tag.String("weapon_id");
             if (itemStack.hasTag(weaponIdTag)) {
-                Weapon weapon = WeaponRegistry.getWeaponById(itemStack.getTag(weaponIdTag));
+                Weapon weapon = weaponFactory.getWeapon(itemStack.getTag(weaponIdTag));
                 if (weapon instanceof RangedWeapon rangedWeapon) {
                     rangedWeapon.reload(player);
                 }
@@ -34,7 +38,7 @@ public class PlayerWeaponHandlerEvent {
             ItemStack item = event.getItemInNewSlot();
             if (item.hasTag(Tag.String("weapon_id"))) {
                 String weaponId = item.getTag(Tag.String("weapon_id"));
-                Weapon weapon = WeaponRegistry.getWeaponById(weaponId);
+                Weapon weapon = weaponFactory.getWeapon(weaponId);
                 if (weapon instanceof RangedWeapon) {
                     player.setExp(1);
                     player.setLevel(player.getAmmoModule().get(weaponId));
@@ -49,7 +53,7 @@ public class PlayerWeaponHandlerEvent {
             Player player = event.getPlayer();
             ItemStack itemStack = event.getItemStack();
             if (itemStack.hasTag(Tag.String("weapon_id"))) {
-                Weapon weapon = WeaponRegistry.getWeaponById(itemStack.getTag(Tag.String("weapon_id")));
+                Weapon weapon = weaponFactory.getWeapon(itemStack.getTag(Tag.String("weapon_id")));
                 weapon.onUse(player, event);
             }
         });

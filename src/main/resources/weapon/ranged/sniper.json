@@ -1,0 +1,18 @@
+{
+  "type" : "ranged",
+  "piercing" : 5,
+  "weaponId" : "sniper",
+  "material" : "minecraft:wooden_shovel",
+  "sound" : "minecraft:entity.firework_rocket.large_blast",
+  "pitch" : 2,
+  "damage" : 20,
+  "knockback" : 3,
+  "magazine" : 5,
+  "spreadFactor" : 0.005,
+  "reloadTime" : 4.3,
+  "range" : 50,
+  "tracer" : true,
+  "attackSpeed" : 1,
+  "currencyPerBullet" : 30,
+  "maxAmmoSize" : 50
+}

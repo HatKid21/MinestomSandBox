@@ -4,15 +4,19 @@ import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
+import org.example.Server;
 import org.example.enemy.Enemy;
 import org.example.enemy.EnemyFactory;
 
 public class ZombieCreatureSpawnCommand extends Command {
 
-    private static final EnemyFactory factory = new EnemyFactory();
+    private final EnemyFactory factory;
+
 
     public ZombieCreatureSpawnCommand() {
         super("zombie");
+
+        this.factory = Server.getEnemyFactory();
 
         setDefaultExecutor((sender, context) -> {
             Player player = (Player) sender;

@@ -35,7 +35,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
     private final double range;
     private final int piercing;
     private final int bulletsPerShot;
-    private final int currencyPerShot;
+    private final double currencyPerBullet;
 
     private boolean isReloading = false;
 
@@ -48,7 +48,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
         this.range = builder.range;
         this.piercing = builder.piercing;
         this.bulletsPerShot = builder.bulletsPerShot;
-        this.currencyPerShot = builder.currencyPerShot;
+        this.currencyPerBullet = builder.currencyPerBullet;
         this.maxAmmoSize = builder.maxAmmoSize;
     }
 
@@ -75,9 +75,8 @@ public class RangedWeapon extends Weapon implements Reloadable {
         Tag<String> weaponIdTag = Tag.String("weapon_id");
         Tag<Integer> ammoTag = Tag.Integer("ammo");
         ItemStack item = player.getInventory().getItemStack(weaponHeldSlot);
-        RangedWeapon weapon = (RangedWeapon) WeaponRegistry.getWeaponById(item.getTag(weaponIdTag));
 
-        if (weapon.getMagazine() == item.getTag(ammoTag)) {
+        if (getMagazine() == item.getTag(ammoTag)) {
             return;
         }
 
@@ -188,7 +187,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
 
                 for (Entity target : targets) {
                     if (target instanceof Enemy enemy) {
-                        customPlayer.getCurrencyModule().add(currencyPerShot);
+                        customPlayer.getCurrencyModule().add(currencyPerBullet);
                         enemy.onHit(getDamage(), getKnockback(), direction);
                     }
                 }
@@ -211,7 +210,7 @@ public class RangedWeapon extends Weapon implements Reloadable {
         private boolean tracer;
         protected double range;
 
-        private int currencyPerShot = 1;
+        private double currencyPerBullet = 1;
         private int piercing = 1;
         private int bulletsPerShot = 1;
 
@@ -234,8 +233,8 @@ public class RangedWeapon extends Weapon implements Reloadable {
             return self();
         }
 
-        public Builder setCurrencyPerShot(int currency) {
-            currencyPerShot = currency;
+        public Builder setCurrencyPerBullet(double currency) {
+            currencyPerBullet = currency;
             return self();
         }
 

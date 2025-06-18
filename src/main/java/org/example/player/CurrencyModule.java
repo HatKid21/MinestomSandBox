@@ -4,19 +4,19 @@ import org.jetbrains.annotations.NotNull;
 
 public class CurrencyModule {
 
-    private float currency;
+    private double currency;
     private final CustomPlayer player;
 
     public CurrencyModule(@NotNull CustomPlayer player){
         this.player = player;
     }
 
-    public void add(float amount){
+    public void add(double amount){
         currency += amount;
         player.updateScoreboard();
     }
 
-    public float get(){
+    public double get(){
         return currency;
     }
 

@@ -1,7 +1,7 @@
 package org.example.player;
 
+import org.example.Server;
 import org.example.weapons.RangedWeapon;
-import org.example.weapons.WeaponRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ public class AmmoModule {
     }
 
     public void add(String weaponId, int amount){
-        RangedWeapon rangedWeapon = (RangedWeapon) WeaponRegistry.getWeaponById(weaponId);
+        RangedWeapon rangedWeapon = (RangedWeapon) Server.getWeaponFactory().getWeapon(weaponId);
         int maxAmmoSize = rangedWeapon.getMaxAmmoSize();
         int currentAmmo = AMMO.getOrDefault(weaponId,0);
         AMMO.put(weaponId, Math.min(maxAmmoSize,currentAmmo + amount));
