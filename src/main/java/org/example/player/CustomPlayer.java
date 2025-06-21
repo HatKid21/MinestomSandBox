@@ -12,13 +12,20 @@ public class CustomPlayer extends Player {
     private final RegenerationModule regenerationModule;
     private final AmmoModule ammoModule;
     private final CurrencyModule currencyModule;
-    private final Scoreboard scoreboard = new Scoreboard(this);
+    private final Scoreboard scoreboard;
+    private final BarricadeModule barricadeModule;
 
     public CustomPlayer(@NotNull PlayerConnection playerConnection, @NotNull GameProfile gameProfile) {
         super(playerConnection, gameProfile);
         this.currencyModule = new CurrencyModule(this);
         this.ammoModule = new AmmoModule();
         this.regenerationModule = new RegenerationModule(this);
+        this.scoreboard = new Scoreboard(this);
+        this.barricadeModule = new BarricadeModule(this);
+    }
+
+    public BarricadeModule getBarricadeModule() {
+        return barricadeModule;
     }
 
     public RegenerationModule getRegenerationModule() {

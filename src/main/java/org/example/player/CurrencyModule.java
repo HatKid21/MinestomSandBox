@@ -1,5 +1,7 @@
 package org.example.player;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 
 public class CurrencyModule {
@@ -14,6 +16,7 @@ public class CurrencyModule {
     public void add(double amount){
         currency += amount;
         player.updateScoreboard();
+        player.sendMessage(Component.text("Coins +" + amount, NamedTextColor.GOLD));
     }
 
     public double get(){

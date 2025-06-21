@@ -25,7 +25,9 @@ import org.example.enemy.EnemyFactory;
 import org.example.events.*;
 import org.example.planet.Planet;
 import org.example.player.CustomPlayer;
+import org.example.utils.BarricadeManager;
 import org.example.utils.GeneratorManager;
+import org.example.utils.SpawnChuckIterator;
 import org.example.utils.TickTabDisplay;
 import org.example.weapons.WeaponFactory;
 
@@ -40,9 +42,19 @@ public class Server {
 
     private static final WeaponFactory WEAPON_FACTORY = new WeaponFactory();
     private static final EnemyFactory ENEMY_FACTORY = new EnemyFactory();
+    private static final GeneratorManager GENERATOR_MANAGER = new GeneratorManager();
+    private static final BarricadeManager BARRICADE_MANAGER = new BarricadeManager();
 
     public static WeaponFactory getWeaponFactory() {
         return WEAPON_FACTORY;
+    }
+
+    public static GeneratorManager getGeneratorManager(){
+        return GENERATOR_MANAGER;
+    }
+
+    public static BarricadeManager getBarricadeManager() {
+        return BARRICADE_MANAGER;
     }
 
     public static EnemyFactory getEnemyFactory() {
@@ -104,14 +116,14 @@ public class Server {
 
         });
 
-        eventHandler.addListener(PlayerSwapItemEvent.class,event ->{
-            Player player = event.getPlayer();
-            Vec dir = player.getPosition().direction().normalize();
-            Pos pos = player.getPosition().add(player.getEyeHeight()).add(dir.mul(5));
-            Planet planet = new Planet(Block.DIAMOND_BLOCK,0.2,1,true);
-            planet.spawn(instance,pos);
-            planet.setVelocity(dir.mul(10));
-        });
+//        eventHandler.addListener(PlayerSwapItemEvent.class,event ->{
+//            Player player = event.getPlayer();
+//            Vec dir = player.getPosition().direction().normalize();
+//            Pos pos = player.getPosition().add(player.getEyeHeight()).add(dir.mul(5));
+//            Planet planet = new Planet(Block.DIAMOND_BLOCK,0.2,1,true);
+//            planet.spawn(instance,pos);
+//            planet.setVelocity(dir.mul(10));
+//        });
 
         registerEvents();
         registerCommands();
@@ -120,7 +132,7 @@ public class Server {
         instance.setChunkSupplier(LightingChunk::new);
 
         server.start("0.0.0.0", 25565);
-        GeneratorManager.init(instance);
+        SpawnChuckIterator.init(instance);
         tabDisplay.start();
     }
 
@@ -141,9 +153,10 @@ public class Server {
         new PunchEvent();
         new GetPlayerSpawnItemsEvent();
 //        new MusicEvent();
-        new PlanetEvent();
+//        new PlanetEvent();
         new DamageEvent();
         new EnemyAttackEvent();
+        new BarricadeHandlerEvent();
     }
 
 }
